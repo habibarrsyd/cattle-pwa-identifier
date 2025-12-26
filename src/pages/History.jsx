@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { ArrowLeft, Trash2, ClipboardList, ScanLine, Edit2, Beef, Clock } from 'lucide-react'
 import './History.css'
 
 function History({ user }) {
@@ -52,28 +53,29 @@ function History({ user }) {
           {/* Filter Section */}
           <div className="filter-section">
             <div className="filter-buttons">
-              <button 
+              <button
                 className={`filter-btn ${filter === 'all' ? 'active' : ''}`}
                 onClick={() => setFilter('all')}
               >
                 Semua ({history.length})
               </button>
-              <button 
+              <button
                 className={`filter-btn ${filter === 'identify' ? 'active' : ''}`}
                 onClick={() => setFilter('identify')}
               >
                 Identifikasi ({history.filter(h => h.status === 'Identified').length})
               </button>
-              <button 
+              <button
                 className={`filter-btn ${filter === 'update' ? 'active' : ''}`}
                 onClick={() => setFilter('update')}
               >
                 Update ({history.filter(h => h.action === 'Update Data').length})
               </button>
             </div>
-            
+
             {history.length > 0 && (
               <button onClick={clearHistory} className="btn-clear">
+                <Trash2 size={16} />
                 Hapus Semua
               </button>
             )}
@@ -82,11 +84,13 @@ function History({ user }) {
           {/* History List */}
           {filteredHistory.length === 0 ? (
             <div className="empty-state">
-              <div className="empty-icon">📋</div>
+              <div className="empty-icon">
+                <ClipboardList size={64} />
+              </div>
               <h3>Belum Ada Riwayat</h3>
               <p>Riwayat aktivitas Anda akan muncul di sini</p>
-              <button 
-                onClick={() => navigate('/identify')} 
+              <button
+                onClick={() => navigate('/identify')}
                 className="btn btn-primary"
               >
                 Mulai Identifikasi
@@ -100,12 +104,12 @@ function History({ user }) {
                     <div className="item-title">
                       {item.status === 'Identified' ? (
                         <>
-                          <span className="icon">📸</span>
+                          <ScanLine size={18} className="icon" />
                           <span>Identifikasi Sapi</span>
                         </>
                       ) : (
                         <>
-                          <span className="icon">✏️</span>
+                          <Edit2 size={18} className="icon" />
                           <span>Update Data</span>
                         </>
                       )}

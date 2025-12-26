@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { CheckCircle, ClipboardList, FileText, Edit, Save, X, ArrowLeft, History, ScanLine } from 'lucide-react'
 import './Result.css'
 
 function Result({ user }) {
@@ -20,7 +21,7 @@ function Result({ user }) {
     if (savedResult) {
       const parsed = JSON.parse(savedResult)
       setResult(parsed)
-      
+
       // Simulate loading cattle data from database
       // In production, this would be an API call
       setCattleData({
@@ -34,7 +35,7 @@ function Result({ user }) {
         location: 'Kandang A-12',
         notes: 'Kondisi baik, nafsu makan normal'
       })
-      
+
       setFormData({
         weight: '450 kg',
         healthStatus: 'Sehat',
@@ -55,9 +56,9 @@ function Result({ user }) {
       lastCheckup: new Date(formData.lastCheckup).toLocaleDateString('id-ID'),
       notes: formData.notes
     }
-    
+
     setCattleData(updatedData)
-    
+
     // Add to history
     const history = JSON.parse(localStorage.getItem('history') || '[]')
     const updateEntry = {
@@ -69,7 +70,7 @@ function Result({ user }) {
     }
     history.unshift(updateEntry)
     localStorage.setItem('history', JSON.stringify(history))
-    
+
     setIsEditing(false)
     alert('Data berhasil diperbarui!')
   }
@@ -89,7 +90,10 @@ function Result({ user }) {
     <div className="result-page">
       <div className="header">
         <div className="container">
-          <button onClick={() => navigate('/')} className="btn-back">← Kembali</button>
+          <button onClick={() => navigate('/')} className="btn-back">
+            <ArrowLeft size={20} />
+            Kembali
+          </button>
           <h1>Hasil Identifikasi</h1>
         </div>
       </div>
@@ -98,7 +102,9 @@ function Result({ user }) {
         <div className="result-container">
           {/* Success Badge */}
           <div className="success-badge">
-            <div className="badge-icon">✓</div>
+            <div className="badge-icon">
+              <CheckCircle size={48} />
+            </div>
             <h2>Identifikasi Berhasil!</h2>
             <p>Sapi telah teridentifikasi dalam sistem</p>
           </div>
@@ -110,7 +116,7 @@ function Result({ user }) {
 
           {/* Cattle Information */}
           <div className="info-card">
-            <h3>📋 Informasi Sapi</h3>
+            <h3><ClipboardList size={20} /> Informasi Sapi</h3>
             <div className="info-grid">
               <div className="info-item">
                 <span className="label">ID Sapi:</span>
@@ -138,12 +144,13 @@ function Result({ user }) {
           {/* Update Form */}
           <div className="update-card">
             <div className="card-header">
-              <h3>📝 Data Kondisi Sapi</h3>
+              <h3><FileText size={20} /> Data Kondisi Sapi</h3>
               {!isEditing && (
-                <button 
-                  onClick={() => setIsEditing(true)} 
+                <button
+                  onClick={() => setIsEditing(true)}
                   className="btn-edit"
                 >
+                  <Edit size={16} />
                   Edit
                 </button>
               )}
@@ -221,17 +228,19 @@ function Result({ user }) {
                 </div>
 
                 <div className="form-actions">
-                  <button 
+                  <button
                     type="button"
-                    onClick={() => setIsEditing(false)} 
+                    onClick={() => setIsEditing(false)}
                     className="btn btn-secondary"
                   >
+                    <X size={18} />
                     Batal
                   </button>
-                  <button 
+                  <button
                     type="submit"
                     className="btn btn-primary"
                   >
+                    <Save size={18} />
                     Simpan Perubahan
                   </button>
                 </div>
@@ -241,16 +250,18 @@ function Result({ user }) {
 
           {/* Action Buttons */}
           <div className="action-buttons">
-            <button 
-              onClick={() => navigate('/identify')} 
+            <button
+              onClick={() => navigate('/identify')}
               className="btn btn-secondary btn-full"
             >
+              <ScanLine size={20} />
               Identifikasi Lagi
             </button>
-            <button 
-              onClick={() => navigate('/history')} 
+            <button
+              onClick={() => navigate('/history')}
               className="btn btn-outline btn-full"
             >
+              <History size={20} />
               Lihat Riwayat
             </button>
           </div>

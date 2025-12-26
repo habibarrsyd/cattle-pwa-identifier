@@ -1,8 +1,10 @@
 import { useState, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { Camera, Image as ImageIcon, ArrowLeft, Check, X, Info, Beef, RefreshCcw, ScanLine } from 'lucide-react'
 import './Identify.css'
 
 function Identify({ user }) {
+  // ... existing state ...
   const [selectedImage, setSelectedImage] = useState(null)
   const [imagePreview, setImagePreview] = useState(null)
   const [isProcessing, setIsProcessing] = useState(false)
@@ -12,6 +14,7 @@ function Identify({ user }) {
   const canvasRef = useRef(null)
   const navigate = useNavigate()
 
+  // ... rest of the logic ...
   const handleFileSelect = (e) => {
     const file = e.target.files[0]
     if (file) {
@@ -26,8 +29,8 @@ function Identify({ user }) {
 
   const startCamera = async () => {
     try {
-      const stream = await navigator.mediaDevices.getUserMedia({ 
-        video: { facingMode: 'environment' } 
+      const stream = await navigator.mediaDevices.getUserMedia({
+        video: { facingMode: 'environment' }
       })
       if (videoRef.current) {
         videoRef.current.srcObject = stream
@@ -50,13 +53,13 @@ function Identify({ user }) {
   const capturePhoto = () => {
     const video = videoRef.current
     const canvas = canvasRef.current
-    
+
     if (video && canvas) {
       canvas.width = video.videoWidth
       canvas.height = video.videoHeight
       const ctx = canvas.getContext('2d')
       ctx.drawImage(video, 0, 0)
-      
+
       canvas.toBlob((blob) => {
         const file = new File([blob], 'captured-image.jpg', { type: 'image/jpeg' })
         setSelectedImage(file)
@@ -73,7 +76,7 @@ function Identify({ user }) {
     }
 
     setIsProcessing(true)
-    
+
     // Simulate processing - in production, this would be API call to model
     setTimeout(() => {
       // Save to localStorage for demonstration
@@ -84,14 +87,14 @@ function Identify({ user }) {
         user: user.username,
         status: 'Identified'
       }
-      
+
       localStorage.setItem('lastResult', JSON.stringify(result))
-      
+
       // Add to history
       const history = JSON.parse(localStorage.getItem('history') || '[]')
       history.unshift(result)
       localStorage.setItem('history', JSON.stringify(history))
-      
+
       setIsProcessing(false)
       navigate('/result')
     }, 2000)
@@ -107,7 +110,10 @@ function Identify({ user }) {
     <div className="identify-page">
       <div className="header">
         <div className="container">
-          <button onClick={() => navigate('/')} className="btn-back">← Kembali</button>
+          <button onClick={() => navigate('/')} className="btn-back">
+            <ArrowLeft size={20} />
+            Kembali
+          </button>
           <h1>Identifikasi Sapi</h1>
         </div>
       </div>
@@ -117,11 +123,11 @@ function Identify({ user }) {
           {!imagePreview && !useCamera && (
             <div className="upload-section">
               <div className="upload-options">
-                <button 
+                <button
                   className="btn btn-primary btn-large btn-full"
                   onClick={startCamera}
                 >
-                  <span className="btn-icon">📷</span>
+                  <Camera size={24} className="btn-icon" />
                   Ambil Foto dengan Kamera
                 </button>
 
@@ -129,11 +135,11 @@ function Identify({ user }) {
                   <span>atau</span>
                 </div>
 
-                <button 
+                <button
                   className="btn btn-secondary btn-large btn-full"
                   onClick={() => fileInputRef.current?.click()}
                 >
-                  <span className="btn-icon">🖼️</span>
+                  <ImageIcon size={24} className="btn-icon" />
                   Upload Foto dari Galeri
                 </button>
 
@@ -147,7 +153,7 @@ function Identify({ user }) {
               </div>
 
               <div className="info-box">
-                <p>📌 Tips untuk hasil terbaik:</p>
+                <p><Info size={18} /> Tips untuk hasil terbaik:</p>
                 <ul>
                   <li>Pastikan pencahayaan cukup</li>
                   <li>Foto dari jarak yang jelas</li>
@@ -159,26 +165,28 @@ function Identify({ user }) {
 
           {useCamera && (
             <div className="camera-section">
-              <video 
-                ref={videoRef} 
-                autoPlay 
+              <video
+                ref={videoRef}
+                autoPlay
                 playsInline
                 className="camera-preview"
               />
               <canvas ref={canvasRef} style={{ display: 'none' }} />
-              
+
               <div className="camera-controls">
-                <button 
+                <button
                   className="btn btn-danger btn-large"
                   onClick={stopCamera}
                 >
+                  <X size={20} />
                   Batal
                 </button>
-                <button 
+                <button
                   className="btn btn-success btn-large"
                   onClick={capturePhoto}
                 >
-                  📸 Ambil Foto
+                  <Camera size={20} />
+                  Ambil Foto
                 </button>
               </div>
             </div>
@@ -191,16 +199,18 @@ function Identify({ user }) {
               </div>
 
               <div className="preview-controls">
-                <button 
+                <button
                   className="btn btn-secondary btn-large"
                   onClick={handleReset}
                 >
+                  <RefreshCcw size={20} />
                   Foto Ulang
                 </button>
-                <button 
+                <button
                   className="btn btn-primary btn-large"
                   onClick={handleIdentify}
                 >
+                  <ScanLine size={20} />
                   Identifikasi Sekarang
                 </button>
               </div>

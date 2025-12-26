@@ -1,4 +1,5 @@
 import { useNavigate } from 'react-router-dom'
+import { Camera, History as HistoryIcon, LogOut, Beef } from 'lucide-react'
 import './Home.css'
 
 function Home({ user, onLogout }) {
@@ -8,10 +9,16 @@ function Home({ user, onLogout }) {
     <div className="home-page">
       <div className="header">
         <div className="container">
-          <h1>🐄 Sapi ID</h1>
+          <div className="logo">
+            <Beef size={28} />
+            <h1>Sapi ID</h1>
+          </div>
           <div className="user-info">
             <span>Halo, {user.username}</span>
-            <button onClick={onLogout} className="btn-logout">Keluar</button>
+            <button onClick={onLogout} className="btn-logout">
+              <LogOut size={18} />
+              Keluar
+            </button>
           </div>
         </div>
       </div>
@@ -23,20 +30,24 @@ function Home({ user, onLogout }) {
         </div>
 
         <div className="menu-grid">
-          <button 
+          <button
             className="menu-card menu-primary"
             onClick={() => navigate('/identify')}
           >
-            <div className="menu-icon">📸</div>
+            <div className="menu-icon">
+              <Camera size={40} />
+            </div>
             <h3>Identifikasi Sapi</h3>
             <p>Ambil atau upload foto sapi untuk identifikasi</p>
           </button>
 
-          <button 
+          <button
             className="menu-card menu-secondary"
             onClick={() => navigate('/history')}
           >
-            <div className="menu-icon">📜</div>
+            <div className="menu-icon">
+              <HistoryIcon size={40} />
+            </div>
             <h3>Riwayat Aktivitas</h3>
             <p>Lihat riwayat identifikasi dan update data</p>
           </button>

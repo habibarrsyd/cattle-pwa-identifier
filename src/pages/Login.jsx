@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { Beef, User, Lock, LogIn } from 'lucide-react'
 import './Login.css'
 
 function Login({ onLogin }) {
@@ -10,7 +11,7 @@ function Login({ onLogin }) {
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    
+
     if (!username || !password) {
       setError('Username dan password harus diisi')
       return
@@ -31,9 +32,11 @@ function Login({ onLogin }) {
       <div className="container">
         <div className="login-container">
           <div className="login-header">
-            <div className="logo">🐄</div>
-            <h1>Identifikasi Sapi</h1>
-            <p>Aplikasi untuk Peternak Konvensional</p>
+            <div className="logo-icon">
+              <Beef size={48} />
+            </div>
+            <h1>Sapi ID</h1>
+            <p>Sistem Identifikasi Ternak Modern</p>
           </div>
 
           <form onSubmit={handleSubmit} className="login-form">
@@ -72,6 +75,7 @@ function Login({ onLogin }) {
             {error && <div className="error-message">{error}</div>}
 
             <button type="submit" className="btn btn-primary btn-full">
+              <LogIn size={20} />
               Masuk
             </button>
           </form>
