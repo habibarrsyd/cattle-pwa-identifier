@@ -1,0 +1,13 @@
+#root {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  text-align: left;
+  max-width: none;
+}
+
+.app {
+  min-height: 100vh;
+  background-color: var(--background);
+}
+
